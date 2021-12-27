@@ -49,25 +49,31 @@ class GraphPloter:
 	def plot_tables_wind(self, window):
 
 
-		fig1 = Figure(figsize=(6, 2), dpi=100)
-		fig2 = Figure(figsize=(6, 2), dpi=100)
+		fig1 = Figure(figsize=(6, 2.4), dpi=100)
+		fig2 = Figure(figsize=(6, 2.4), dpi=100)
 		
 		ax1 = fig1.add_subplot()
 		ax1.set_title('Shear Force')
-		ax1.set_xlabel("length [m]")
-		ax1.set_ylabel("force [N]")
+		ax1.set_xlabel("beam length [m]")
+		ax1.set_ylabel("Force [N]")
+		#ax1.set_xlim([-len(self.x_sh_force), len(self.x_sh_force)]) # задание и ограничение диапазона значений графика
+		ax1.set_ylim([-len(self.y_sh_force), len(self.y_sh_force)*1.4])
 		ax1.plot(self.x_sh_force, self.y_sh_force, linewidth=3)
 		#ax1.stem(self.x_sh_force, self.y_sh_force, linefmt="g-", markerfmt=".", bottom=0) # заливка вертикальными линиями
+		#ax1.fill_between(self.x_sh_force, self.y_sh_force, hatch = '||')
 		ax1.fill_between(self.x_sh_force, self.y_sh_force, color = 'green') #заливка графика
 		ax1.grid(True)
+		fig1.tight_layout() # раздвигает графики что бы не накладывлись друг на друга
 
 
 		ax2 = fig2.add_subplot()
-		ax2.set_xlabel("qwer [s]")
-		ax2.set_ylabel("qwer(t)")
+		ax2.set_title('Bending Moment')
+		ax2.set_xlabel("beam length [m]")
+		ax2.set_ylabel("Moment [Nm]")
 		ax2.plot(self.x_bend_moment, self.y_bend_moment)
 		ax2.fill_between(self.x_bend_moment, self.y_bend_moment, color = 'red') #заливка графика
-		
+		fig2.tight_layout() # 
+
 		canvas1 = FigureCanvasTkAgg(fig1, master=window)  # A tk.DrawingArea.
 		canvas2 = FigureCanvasTkAgg(fig2, master=window)
 		
