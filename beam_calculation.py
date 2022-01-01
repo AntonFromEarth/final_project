@@ -1,4 +1,4 @@
-
+import numpy as np
 
 class Case_1:
 	def __init__(self, beam_length, force):
@@ -17,16 +17,19 @@ class Case_1:
 		self.reaction_moment = self.force*self.beam_length
 
 		#SHEAR FORCE CALCULATION
-		self.x_shear_force = [i for i in range(self.beam_length+1)]
+		#self.x_shear_force = [i for i in range(self.beam_length+1)]
+		#[round(i, 2) for i in np.linspace(0, 100, 10)]
+		self.x_shear_force = [round(i, 2) for i in np.linspace(0, self.beam_length, 50)]
 		#print(f"x_shear_force = {self.x_shear_force}, len = {len(self.x_shear_force)}") # MY CHECK
-		self.y_shear_force = [self.reaction_force]*len(self.x_shear_force)
+		self.y_shear_force = [self.reaction_force]*len(self.x_shear_force) # в данном случае умножаем одиночный список на количество членов в списке Х и таким образов создаем сисок с одинаковыми числами в количестве как в списке Х
 		#print(f"y_shear_force_1 = {self.y_shear_force}, len = {len(self.y_shear_force)}") # MY CHECK
 
 		#BENDING MOMENT CALCULATION
-		self.x_bend_moment = [i for i in range(self.beam_length+1)]
-		#print(f"x_bend_moment = {self.x_bend_moment}, len = {len(self.x_bend_moment)}") # MY CHECK
+		#self.x_bend_moment = [i for i in range(self.beam_length+1)]
+		self.x_bend_moment = [round(i, 2) for i in np.linspace(0, self.beam_length, 50)]
+		print(f"x_bend_moment = {self.x_bend_moment}, len = {len(self.x_bend_moment)}") # MY CHECK
 		self.y_bend_moment = [round(-self.reaction_moment + i*self.reaction_force, 2) for i in self.x_bend_moment]
-		#print(f"y_torque_1 = {self.y_bend_moment}, len = {len(self.y_bend_moment)}") # MY CHECK
+		print(f"y_torque_1 = {self.y_bend_moment}, len = {len(self.y_bend_moment)}") # MY CHECK
 
 		return self.x_shear_force, self.y_shear_force\
 				, self.x_bend_moment, self.y_bend_moment
@@ -36,7 +39,35 @@ class Case_2:
 	pass
 
 class Case_3:
-	pass
+	def __init__(self, l_beam_length, w_distributed_force):
+		self.l_beam_length = l_beam_length
+		self.w_distributed_force = w_distributed_force
+		self.reaction_force = None
+		self.reaction_moment = None
+
+		self.x_shear_force = []
+		self.y_shear_force = []
+		self.x_bend_moment = []
+		self.y_bend_moment = []
+
+	def calculation(self):
+		self.reaction_force = self.w_distributed_force * self.l_beam_length
+		self.reaction_moment = self.reaction_force * self.l_beam_length / 2
+
+		#SHEAR FORCE CALCULATION
+		self.x_shear_force = [round(i, 2) for i in np.linspace(0, self.l_beam_length, 50)]
+		#print(f"x_shear_force = {self.x_shear_force}, len = {len(self.x_shear_force)}") # MY CHECK
+		self.y_shear_force = [round(self.w_distributed_force * (self.l_beam_length - i)) for i in self.x_shear_force]
+		#print(f"y_shear_force = {self.y_shear_force}, len = {len(self.y_shear_force)}") # MY CHECK
+
+		#BENDING MOMENT CALCULATION
+		self.x_bend_moment = [round(i, 2) for i in np.linspace(0, self.l_beam_length, 50)]
+		#print(f"x_bend_moment = {self.x_bend_moment}, len = {len(self.x_bend_moment)}") # MY CHECK
+		self.y_bend_moment = [round(- self.w_distributed_force * pow((self.l_beam_length - i), 2) / 2, 2) for i in self.x_bend_moment]
+		#print(f"y_bend_moment = {self.y_bend_moment}, len = {len(self.y_bend_moment)}") # MY CHECK
+
+		return self.x_shear_force, self.y_shear_force\
+				, self.x_bend_moment, self.y_bend_moment
 
 class Case_4:
 	pass
@@ -112,7 +143,13 @@ if __name__ == '__main__':
 	print("c1.calculation() = ", c1.calculation())
 	'''
 
+	c3 = Case_3(10, 2)
+	c3.calculation()
+	#print("c3.calculation() = ", c3.calculation())
+	
+
+	'''
 	c6 = Case_6(10, 4, 14)
 	c6.calculation()
 	print("c1.calculation() = ", c6.calculation())
-
+	'''
