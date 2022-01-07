@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox as mb
 
 import beam_calculation as bc
 import plotting_file as pf
@@ -13,47 +14,66 @@ sub_window_width = 220
 def submit():
 	#print('hello!')
 	if var.get() == 1:
-		#print("first")
+		#print("first") # MY CHECK
 		case_1()
 	elif var.get() == 2:
-		print("second")
+		print("second") # MY CHECK
 		pass
 	elif var.get() == 3:
-		print("third")
+		print("third") # MY CHECK
 		case_3()
 	elif var.get() == 4:
-		print("fourth")
+		print("fourth") # MY CHECK
 		pass
 	elif var.get() == 5:
-		print("fifth")
+		print("fifth") # MY CHECK
 		pass
 	elif var.get() == 6:
-		print("sixth")
+		print("sixth") # MY CHECK
 		case_6()
 	elif var.get() == 7:
-		print("seventh")
+		print("seventh") # MY CHECK # MY CHECK
 		pass
 
 
 
 def case_1():
 
+	def common_check_entry(event, entry_name):
+		""" проверка текста в поле ввода """
+		#print('repr(event.char)', repr(event.char)) # MY CHECK
+		entry_content = entry_name.get()
+
+		if event.char.isdigit():
+			#print("event.char\tis digit") # MY CHECK
+			upd_value = entry_content + event.char
+			entry_name.delete(0, tk.END)
+			entry_name.insert(0, upd_value)
+
+		elif event.char == '\x08':
+			temp = entry_content[:-1]
+			entry_name.delete(0, 'end')
+			entry_name.insert(0, temp)
+
+		else:
+			entry_name.delete(0, tk.END)
+			entry_name.insert(0,'')
+			mb.showerror("ERRor", "It must be a number!")
+
+		wind_case_1.mainloop()
+		
+
 	def send():
 		''' функция отправляет  '''
 		beam_lenght = int(wc1_entry_1.get())
 		force = int(wc1_entry_2.get())
-		print(beam_lenght) # MY CHECK
-		print(force) # MY CHECK
+		#print(beam_lenght) # MY CHECK
+		#print(force) # MY CHECK
 
 		c1 = bc.Case_1(beam_length = beam_lenght, force = force)
-		#c1.calculation()
-		#gp1 = pf.GraphPloter(*c1.calculation())
-		#gp1.plot_tables()
 
 		sub_window_height = 480
 		sub_window_width = 600
-		wind_case_1.geometry(f"{sub_window_width}x{sub_window_height}+200+100")
-	
 
 		gp2 = pf.GraphPloter(*c1.calculation())
 		gp2.plot_tables_wind(wind_case_1)
@@ -65,14 +85,17 @@ def case_1():
 
 	wind_case_1 = tk.Toplevel()
 	wind_case_1.title('Case 1')
-	wind_case_1.geometry(f"{sub_window_width}x{sub_window_height}+450+50")
+	#wind_case_1.geometry(f"{sub_window_width}x{sub_window_height}+450+50")
+
 	wc1_label_1 = tk.Label(wind_case_1, text='Lenght of Beam (l) [m]:').grid(row=1, column=0, stick='w')
 	wc1_label_2 = tk.Label(wind_case_1, text='Force (F) [kN]:').grid(row=2, column=0, stick='w')
-	#wind_case_1['bg'] = 'grey'
-	#wind_case_1.overrideredirect(True)
+
 	wc1_entry_1 = tk.Entry(wind_case_1)
+	wc1_entry_1.bind('<Key>', lambda a, b = wc1_entry_1: common_check_entry(a, b))
 	wc1_entry_1.grid(row=1, column=1)
+
 	wc1_entry_2 = tk.Entry(wind_case_1)
+	wc1_entry_2.bind('<Key>', lambda a, b = wc1_entry_2: common_check_entry(a, b))
 	wc1_entry_2.grid(row=2, column=1)
 
 
@@ -81,29 +104,46 @@ def case_1():
 
 	#tk.Label(wind_case_1, text="About this").pack(expand=2)
 	#wind_case_1.after(5000, lambda: wind_case_1.destroy())
+	wind_case_1.mainloop()
 
 def case_2():
-	print(var.get())
+	print(var.get()) # MY CHECK
 
 def case_3():
-	print(var.get())
+	print(var.get()) # MY CHECK
+
+	def common_check_entry(event, entry_name):
+		""" проверка текста в поле ввода """
+		#print('repr(event.char)', repr(event.char)) # MY CHECK
+		entry_content = entry_name.get()
+
+		if event.char.isdigit():
+			#print("event.char\tis digit") # MY CHECK
+			upd_value = entry_content + event.char
+			entry_name.delete(0, tk.END)
+			entry_name.insert(0, upd_value)
+
+		elif event.char == '\x08':
+			temp = entry_content[:-1]
+			entry_name.delete(0, 'end')
+			entry_name.insert(0, temp)
+
+		else:
+			entry_name.delete(0, tk.END)
+			entry_name.insert(0,'')
+			mb.showerror("ERRor", "It must be a number!")
+
+		wind_case_3.mainloop()
 
 	def send():
 		l_beam_lenght = int(wc3_entry_1.get())
 		w_distributed_force = int(wc3_entry_2.get())
-		#force = int(wc3_entry_3.get())
-		#print(l_beam_lenght)
-		#print(a_distance)
-		#print(force)
 
 		c3 = bc.Case_3(l_beam_length = l_beam_lenght, w_distributed_force = w_distributed_force)
-		#c1.calculation()
 
-		#gp1 = pf.GraphPloter(*c1.calculation())
-		#gp1.plot_tables()
 		sub_window_height = 480
 		sub_window_width = 600
-		wind_case_3.geometry(f"{sub_window_width}x{sub_window_height}+200+100")
+		#wind_case_3.geometry(f"{sub_window_width}x{sub_window_height}+200+100")
 	
 
 		gp1 = pf.GraphPloter(*c3.calculation())
@@ -116,15 +156,18 @@ def case_3():
 
 	wind_case_3 = tk.Toplevel()
 	wind_case_3.title('Case 6')
-	wind_case_3.geometry(f"{sub_window_width}x{sub_window_height}+450+50")
+	#wind_case_3.geometry(f"{sub_window_width}x{sub_window_height}+450+50")
 	wc3_label_1 = tk.Label(wind_case_3, text='Lenght of Beam (l) [m]:').grid(row=1, column=0, stick='w')
 	wc3_label_2 = tk.Label(wind_case_3, text='Distributed Force (w) [kN/m]:').grid(row=2, column=0, stick='w')
 	#wc3_label_3 = tk.Label(wind_case_3, text='Force (F) [kN]:').grid(row=3, column=0, stick='w')
 	#wind_case_1['bg'] = 'grey'
 	#wind_case_1.overrideredirect(True)
 	wc3_entry_1 = tk.Entry(wind_case_3)
+	wc3_entry_1.bind('<Key>', lambda a, b = wc3_entry_1: common_check_entry(a, b))
 	wc3_entry_1.grid(row=1, column=1)
+
 	wc3_entry_2 = tk.Entry(wind_case_3)
+	wc3_entry_2.bind('<Key>', lambda a, b = wc3_entry_2: common_check_entry(a, b))
 	wc3_entry_2.grid(row=2, column=1)
 	#wc3_entry_3 = tk.Entry(wind_case_3)
 	#wc3_entry_3.grid(row=3, column=1)
@@ -142,6 +185,40 @@ def case_5():
 
 def case_6():
 
+	def common_check_entry(event, entry_name):
+		""" проверка текста в поле ввода """
+		#print('repr(event.char)', repr(event.char)) # MY CHECK
+		entry_content = entry_name.get()
+
+		if event.char.isdigit():
+			#print("event.char\tis digit") # MY CHECK
+			upd_value = entry_content + event.char
+			entry_name.delete(0, tk.END)
+			entry_name.insert(0, upd_value)
+
+		elif event.char == '\x08':
+			temp = entry_content[:-1]
+			entry_name.delete(0, 'end')
+			entry_name.insert(0, temp)
+
+		else:
+			entry_name.delete(0, tk.END)
+			entry_name.insert(0,'')
+			mb.showerror("ERRor", "It must be a number!")
+
+		wind_case_6.mainloop()
+
+	def check_second_entry(event):
+		if wc6_entry_1.get() == '' or wc6_entry_2.get() == '':
+			pass
+		elif int(wc6_entry_1.get()) <= int(wc6_entry_2.get()) or int(wc6_entry_2.get()) < 1:
+			wc6_entry_2.delete(0, tk.END)
+			wc6_entry_2.insert(0,'')
+			mb.showerror("ERRor", f"The number in second Entry area\nmust be more than 1 and less than {wc6_entry_1.get()}")
+		else:
+			pass
+
+
 	def send():
 		l_beam_lenght = int(wc6_entry_1.get())
 		a_distance = int(wc6_entry_2.get())
@@ -157,7 +234,7 @@ def case_6():
 		#gp1.plot_tables()
 		sub_window_height = 480
 		sub_window_width = 600
-		wind_case_6.geometry(f"{sub_window_width}x{sub_window_height}+200+100")
+		#wind_case_6.geometry(f"{sub_window_width}x{sub_window_height}+200+100")
 	
 
 		gp1 = pf.GraphPloter(*c6.calculation())
@@ -170,22 +247,46 @@ def case_6():
 
 	wind_case_6 = tk.Toplevel()
 	wind_case_6.title('Case 6')
-	wind_case_6.geometry(f"{sub_window_width}x{sub_window_height}+450+50")
-	wc6_label_1 = tk.Label(wind_case_6, text='Lenght of Beam (l) [m]:').grid(row=1, column=0, stick='w')
+	#wind_case_6.geometry(f"{sub_window_width}x{sub_window_height}+450+50")
+
+	wc6_label_1 = tk.Label(wind_case_6, text='Lenght of Beam (l) [m]:')
+	wc6_label_1.grid(row=1, column=0, stick='w')
 	wc6_label_2 = tk.Label(wind_case_6, text='Distance to the Force (a) [m]:').grid(row=2, column=0, stick='w')
 	wc6_label_3 = tk.Label(wind_case_6, text='Force (F) [kN]:').grid(row=3, column=0, stick='w')
 	#wind_case_1['bg'] = 'grey'
 	#wind_case_1.overrideredirect(True)
 	wc6_entry_1 = tk.Entry(wind_case_6)
+	wc6_entry_1.bind('<Key>', lambda a, b = wc6_entry_1: common_check_entry(a, b))
 	wc6_entry_1.grid(row=1, column=1)
+
 	wc6_entry_2 = tk.Entry(wind_case_6)
+	wc6_entry_2.bind('<Key>', lambda a, b = wc6_entry_2: common_check_entry(a, b))
 	wc6_entry_2.grid(row=2, column=1)
+
 	wc6_entry_3 = tk.Entry(wind_case_6)
+	wc6_entry_3.bind('<Key>', lambda a, b = wc6_entry_3: common_check_entry(a, b))
+	wc6_entry_3.bind('<Button-1>', check_second_entry)
 	wc6_entry_3.grid(row=3, column=1)
 
 
-	wc6_button_1 = tk.Button(wind_case_6, text='submit', command=send).grid(row=4, column=0, stick='we', columnspan = 2)
 
+
+	#wc6_button_1 = tk.Button(wind_case_6, text='submit', command=send, state = 'disabled').grid(row=4, column=0, stick='we', columnspan = 2)
+	wc6_button_1 = tk.Button(wind_case_6, text='submit', command = send)
+	wc6_button_1.grid(row=4, column=0, stick='we', columnspan = 2)
+
+	#wc6_button_1.config(state = 'normal') # MY CHECK
+	#wc6_button_1.config(state = 'disabled') # MY CHECK
+	#wc6_button_1['state'] = 'disabled' # MY CHECK 
+
+	#wc6_button_1.config(text = "Goodbye World") # MY CHECK
+
+	
+
+	#wc6_button_1.config(text = "Goodbye ") # MY CHECK
+	
+	#wc6_button_1['state'] = DISABLED # MY CHECK
+	
 	wind_case_6.mainloop()
 
 
@@ -280,7 +381,8 @@ rb_7 = tk.Radiobutton(root, variable = var,
 #choice_button = tk.Button(root, text='SUBMIT', command=submit).grid(row=12, column=0, stick='we')
 choice_button = tk.Button(root, text='SUBMIT', command=submit).pack()
 
-root.update() # блок арказывает нам размеры окна
+'''
+root.update() # блок показывает нам размеры окна
 print("root.winfo_width()", root.winfo_width()) 
 print("root.winfo_height()", root.winfo_height())
 print("root.winfo_geometry()", root.winfo_geometry())
@@ -290,5 +392,6 @@ print("root.winfo_geometry()", root.winfo_geometry())
 print("root.winfo_screenwidth()", root.winfo_screenwidth()) # ширина экрана
 print("root.winfo_screenheight()", root.winfo_screenheight()) # высота экрана
 print("root.geometry()", root.geometry())
+'''
 
 root.mainloop() # запуск петли событий
