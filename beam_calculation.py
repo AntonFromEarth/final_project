@@ -56,9 +56,9 @@ class Case_3:
 
 		#SHEAR FORCE CALCULATION
 		self.x_shear_force = [round(i, 2) for i in np.linspace(0, self.l_beam_length, 50)]
-		#print(f"x_shear_force = {self.x_shear_force}, len = {len(self.x_shear_force)}") # MY CHECK
-		self.y_shear_force = [round(self.w_distributed_force * (self.l_beam_length - i)) for i in self.x_shear_force]
-		#print(f"y_shear_force = {self.y_shear_force}, len = {len(self.y_shear_force)}") # MY CHECK
+		print(f"x_shear_force = {self.x_shear_force}, len = {len(self.x_shear_force)}") # MY CHECK
+		self.y_shear_force = [round(self.w_distributed_force * (self.l_beam_length - i), 2) for i in self.x_shear_force]
+		print(f"y_shear_force = {self.y_shear_force}, len = {len(self.y_shear_force)}") # MY CHECK
 
 		#BENDING MOMENT CALCULATION
 		self.x_bend_moment = [round(i, 2) for i in np.linspace(0, self.l_beam_length, 50)]

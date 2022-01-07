@@ -30,7 +30,7 @@ class GraphPloter:
 		#ax1.set_ylim([-len(self.y_sh_force)*1.1, len(self.y_sh_force)*1.1])
 
 		ax1.set_ylim([-abs(min(self.y_sh_force))*1.2, abs(max(self.y_sh_force))*1.2])  # задание и ограничение диапазона значений графика по шкале y
-		ax1.plot(self.x_sh_force, self.y_sh_force, color = 'green', linewidth=1)
+		ax1.plot(self.x_sh_force, self.y_sh_force, color = 'b', linewidth=2)
 		#ax1.stem(self.x_sh_force, self.y_sh_force, linefmt="g-", markerfmt=".", bottom=0) # заливка вертикальными линиями
 		#ax1.fill_between(self.x_sh_force, self.y_sh_force, hatch = '|')
 		ax1.fill_between(self.x_sh_force, self.y_sh_force, color = 'green') #заливка графика

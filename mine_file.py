@@ -39,6 +39,7 @@ def submit():
 def case_1():
 
 	def send():
+		''' функция отправляет  '''
 		beam_lenght = int(wc1_entry_1.get())
 		force = int(wc1_entry_2.get())
 		print(beam_lenght) # MY CHECK
@@ -73,6 +74,7 @@ def case_1():
 	wc1_entry_1.grid(row=1, column=1)
 	wc1_entry_2 = tk.Entry(wind_case_1)
 	wc1_entry_2.grid(row=2, column=1)
+
 
 	wc1_button_1 = tk.Button(wind_case_1, text='submit', command=send).grid(row=3, column=0, stick='we', columnspan = 2)
 
@@ -129,6 +131,13 @@ def case_3():
 
 	wc3_button_1 = tk.Button(wind_case_3, text='submit', command=send).grid(row=4, column=0, stick='we', columnspan = 2)
 
+def case_4():
+	print(var.get())
+	pass
+
+def case_5():
+	print(var.get())
+	pass
 
 
 def case_6():
@@ -174,7 +183,10 @@ def case_6():
 	wc6_entry_3 = tk.Entry(wind_case_6)
 	wc6_entry_3.grid(row=3, column=1)
 
+
 	wc6_button_1 = tk.Button(wind_case_6, text='submit', command=send).grid(row=4, column=0, stick='we', columnspan = 2)
+
+	wind_case_6.mainloop()
 
 
 
@@ -268,5 +280,15 @@ rb_7 = tk.Radiobutton(root, variable = var,
 #choice_button = tk.Button(root, text='SUBMIT', command=submit).grid(row=12, column=0, stick='we')
 choice_button = tk.Button(root, text='SUBMIT', command=submit).pack()
 
+root.update() # блок арказывает нам размеры окна
+print("root.winfo_width()", root.winfo_width()) 
+print("root.winfo_height()", root.winfo_height())
+print("root.winfo_geometry()", root.winfo_geometry())
+
+#print(root.screen_width())
+#print(tk.screen_height)
+print("root.winfo_screenwidth()", root.winfo_screenwidth()) # ширина экрана
+print("root.winfo_screenheight()", root.winfo_screenheight()) # высота экрана
+print("root.geometry()", root.geometry())
 
 root.mainloop() # запуск петли событий
